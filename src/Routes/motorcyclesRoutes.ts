@@ -1,10 +1,17 @@
 import { Router } from 'express';
+import { MotorcyclesController } from '../Controllers';
 
 const routes = Router();
 
-routes.get('/motorcycles', (req, res, next) => new MotorcyclesController(req, res, next).findAllMotorcycles());
+routes.get(
+  '/motorcycles',
+  (req, res, next) => new MotorcyclesController(req, res, next).findAllMotorcycles(),
+);
 
-routes.get('/motorcycles/:id', (req, res, next) => new MotorcyclesController(req, res, next).findMotorcycleById());
+routes.get(
+  '/motorcycles/:id',
+  (req, res, next) => new MotorcyclesController(req, res, next).findMotorcycleById(),
+);
 
 routes.post('/motorcycles', (req, res, next) => new MotorcyclesController(req, res, next).create());
 

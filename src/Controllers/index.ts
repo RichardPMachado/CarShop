@@ -1,3 +1,4 @@
 import CarsController from './CarsController';
+import MotorcyclesController from './MotorcyclesController';
 
-export { CarsController };
+export { CarsController, MotorcyclesController };

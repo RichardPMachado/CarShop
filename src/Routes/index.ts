@@ -1,3 +1,4 @@
 import carsRoutes from './carsRoutes';
+import motorcyclesRoutes from './motorcyclesRoutes';
 
-export default { carsRoutes };
+export { carsRoutes, motorcyclesRoutes };

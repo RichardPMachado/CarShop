@@ -13,4 +13,12 @@ export default class CarsController {
   public async create() {
     await this._servise.create();
   }
+
+  public async findAllCars() {
+    await this._servise.findAllCars();    
+  }
+  
+  public async findCarById() {
+    await this._servise.findCarById();
+  }
 }

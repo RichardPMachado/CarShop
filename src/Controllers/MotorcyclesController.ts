@@ -11,7 +11,12 @@ export default class MotorcyclesController {
   }
 
   public async create() {
-    await this._servise.create();
+    try {
+      const newMotorcycle = await this._service.create(this.req.body);
+      return this.res.status(201).json(newMotorcycle);
+    } catch (error) {
+      this.next(error);
+    }
   }
 
   public async findAllMotorcycles() {

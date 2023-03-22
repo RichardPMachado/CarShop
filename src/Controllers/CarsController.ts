@@ -11,7 +11,12 @@ export default class CarsController {
   }
 
   public async create() {
-    await this._servise.create();
+    try {
+      const newCar = await this._service.create(this.req.body);
+      return this.res.status(201).json(newCar);
+    } catch (error) {
+      this.next(error);
+    }
   }
 
   public async findAllCars() {

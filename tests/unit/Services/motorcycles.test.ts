@@ -99,7 +99,7 @@ describe('Deve verificar a camada Services de motorcycle', function () {
   it(
     'Se o id passado não corresponder a um Motorcycle, retornar um Erro: "Motorcycle not found"',
     async function () {
-      sinon.stub(Model, 'findById').resolves([]);
+      sinon.stub(Model, 'findById').resolves(undefined);
       try {
         await service.getMotorcycleById('634852326b35b59438fbea2f');
       } catch (error) {

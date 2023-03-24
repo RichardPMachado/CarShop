@@ -88,7 +88,7 @@ describe('Deve verificar a camada Services de car', function () {
   it(
     'Se o id passado não corresponder a um car, retornar um Erro: "Car not found"',
     async function () {
-      sinon.stub(Model, 'findById').resolves([]);
+      sinon.stub(Model, 'findById').resolves(undefined);
       try {
         await service.getCarById('634852326b35b59438fbea2f');
       } catch (error) {

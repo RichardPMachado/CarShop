@@ -3,6 +3,7 @@ import {
   Schema,
   model,
   models,
+  isValidObjectId,
 } from 'mongoose';
 import ICar from '../Interfaces/ICar';
 import ErrorMap from '../utils/ErrorMap';
@@ -28,17 +29,14 @@ export default class CarsODM {
     return this._model.create({ ...car });
   }
 
-  public async findAllCars(): Promise<ICar[] | null> {
+  public async findAllCars(): Promise<ICar[]> {
     const result = await this._model.find();
     return result;
   }
   
-  public async findCarById(_id: string): Promise<ICar | null> {
-    const result = await this._model.findById(
-      { _id },
-      { id: 1, model: 1, year: 1, color: 1, status: 1, buyValue: 1, doorsQty: 1, seatsQty: 1 },
-    );
-    if (!result) throw new ErrorMap(404, 'Car not found');
+  public async findCarById(id: string): Promise<ICar | null> {
+    if (!isValidObjectId(id)) throw new ErrorMap(422, 'Invalid mongo id');
+    const result = await this._model.findById(id);
     return result;
   }
 }

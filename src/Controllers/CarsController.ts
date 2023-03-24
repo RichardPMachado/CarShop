@@ -36,8 +36,9 @@ export default class CarsController {
   }
   
   public async findCarById() {
+    const { id } = this.req.params;
     try {
-      const car = await this._service.getCarById(this.req.params.id);
+      const car = await this._service.getCarById(id);
       return this.res.status(200).json(car);
     } catch (error) {
       this.next(error);

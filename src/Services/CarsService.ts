@@ -1,6 +1,7 @@
 import Car from '../Domains/Car';
 import ICar from '../Interfaces/ICar';
 import CarsODM from '../Models/CarsODM';
+import ErrorMap from '../utils/ErrorMap';
 
 export default class CarsServise {
   private createCarDomain(car: ICar | null): Car | null {
@@ -18,11 +19,17 @@ export default class CarsServise {
 
   public async getAllCars() {
     const carsODM = new CarsODM();
-    return carsODM.findAllCars();
+    const cars = await carsODM.findAllCars();
+    const carsMaping = cars.map((car) => this.createCarDomain(car));
+    return carsMaping;
   }
 
   public async getCarById(id: string) {
     const carsODM = new CarsODM();
-    return carsODM.findCarById(id);
+    const car = await carsODM.findCarById(id);
+    console.log(car);
+    
+    if (!car) throw new ErrorMap(404, 'Car not found');
+    return this.createCarDomain(car);
   }
 }

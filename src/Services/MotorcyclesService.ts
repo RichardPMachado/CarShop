@@ -19,7 +19,7 @@ export default class MotorcyclessServise {
 
   public async getAllMotorcycles() {
     const motorcyclesODM = new MotorcyclesODM();
-    const motorcycles = await motorcyclesODM.findAllMotorcycles();
+    const motorcycles = await motorcyclesODM.findAllVehicles();
     const motorcyclesMaping = motorcycles.map((motorcycle) => this
       .createMotorcycleDomain(motorcycle));
     return motorcyclesMaping;
@@ -27,7 +27,7 @@ export default class MotorcyclessServise {
 
   public async getMotorcycleById(id: string) {
     const motorcyclesODM = new MotorcyclesODM();
-    const motorcycle = await motorcyclesODM.findMotorcycleById(id);
+    const motorcycle = await motorcyclesODM.findVehicleById(id);
  
     if (!Motorcycle) throw new ErrorMap(404, 'Motorcycle not found');
     return this.createMotorcycleDomain(motorcycle);

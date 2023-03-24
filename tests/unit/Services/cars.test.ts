@@ -28,6 +28,16 @@ describe('Deve verificar a camada Services de car', function () {
     },
   ];
 
+  const data = {
+    model: 'Tempra',
+    year: 1995,
+    color: 'Blue',
+    buyValue: 39,
+    status: true,
+    doorsQty: 2,
+    seatsQty: 5,
+  };
+
   let service: CarsService;
 
   beforeEach(function () {
@@ -36,6 +46,22 @@ describe('Deve verificar a camada Services de car', function () {
 
   afterEach(function () {
     sinon.restore();
+  });
+
+  it('Deve cadastrar um car com sucesso', async function () {
+    sinon.stub(Model, 'create').resolves(allCars[0]);
+
+    const newMotor = await service.registerCars(data);
+
+    expect(newMotor).to.be.deep.equal(allCars[0]);
+  });
+
+  it('Deve cadastrar retornar um erro ao tentar cadastra um car', async function () {
+    sinon.stub(Model, 'create').resolves(undefined);
+
+    const newMotor = await service.registerCars(data);
+
+    expect(newMotor).to.be.deep.equal(null);
   });
 
   it('Deve buscar todos cars, com SUCESSO', async function () {
@@ -70,4 +96,36 @@ describe('Deve verificar a camada Services de car', function () {
       }
     },
   );
+
+  it('Deve fazer o update de um car pelo o id, com SUCESSO', async function () {
+    const carOutput: Car = new Car({ ...data, id: '634852326b35b59438fbea31' });
+    sinon.stub(Model, 'findByIdAndUpdate').resolves(carOutput);
+
+    // const service = new CarsService();
+    const result = await service.updateCar('634852326b35b59438fbea31', data);
+
+    expect(result).to.be.deep.equal({ ...data, id: '634852326b35b59438fbea31' });
+  });
+
+  it('Deve retornar um erro ao tentar fazer o update', async function () {
+    sinon.stub(Model, 'findByIdAndUpdate').resolves(undefined);
+
+    // const service = new MotorcyclesService();
+    try {
+      await service.updateCar('6', data);
+    } catch (error) {
+      expect((error as Error).message).to.be.deep.equal('Invalid mongo id');
+    }
+  });
+
+  it('Deve retornar um erro ao tentar fazer o update: "Motorcycle not found"', async function () {
+    sinon.stub(Model, 'findByIdAndUpdate').resolves(undefined);
+
+    // const service = new MotorcyclesService();
+    try {
+      await service.updateCar('634852326b35b59438fbea31', data);
+    } catch (error) {
+      expect((error as Error).message).to.be.deep.equal('Car not found');
+    }
+  });
 });

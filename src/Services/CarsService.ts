@@ -27,8 +27,7 @@ export default class CarsServise {
   public async getCarById(id: string) {
     const carsODM = new CarsODM();
     const car = await carsODM.findCarById(id);
-    console.log(car);
-    
+ 
     if (!car) throw new ErrorMap(404, 'Car not found');
     return this.createCarDomain(car);
   }

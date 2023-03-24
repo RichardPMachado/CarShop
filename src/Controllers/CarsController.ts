@@ -16,10 +16,10 @@ export default class CarsController {
     const car: ICar = {
       model: this.req.body.model,
       year: this.req.body.year,
-      status: this.req.body.status || false,
       buyValue: this.req.body.buyValue,
-      doorsQty: this.req.body.doorsQty,
       color: this.req.body.color,
+      status: this.req.body.status || false,
+      doorsQty: this.req.body.doorsQty,
       seatsQty: this.req.body.seatsQty,
     };
     const newCar = await this._service.registerCars(car);

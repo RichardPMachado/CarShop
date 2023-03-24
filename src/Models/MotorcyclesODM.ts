@@ -3,8 +3,10 @@ import {
   Schema,
   model,
   models,
+  isValidObjectId,
 } from 'mongoose';
 import IMotorcycle from '../Interfaces/IMotorcycle';
+import ErrorMap from '../utils/ErrorMap';
 
 export default class MotorcyclesODM {
   private schema: Schema;
@@ -26,12 +28,13 @@ export default class MotorcyclesODM {
     return this._model.create({ ...motorcycle });
   }
 
-  public async findAllMotorcycles(): Promise<IMotorcycle[] | null> {
+  public async findAllMotorcycles(): Promise<IMotorcycle[]> {
     const result = await this._model.find();
     return result;
   }
 
   public async findMotorcycleById(id: string): Promise<IMotorcycle | null> {
+    if (!isValidObjectId(id)) throw new ErrorMap(422, 'Invalid mongo id');
     const result = await this._model.findById(id);
     return result;
   }

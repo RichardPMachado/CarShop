@@ -1,6 +1,7 @@
 import Motorcycle from '../Domains/Motorcycle';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import MotorcyclesODM from '../Models/MotorcyclesODM';
+import ErrorMap from '../utils/ErrorMap';
 
 export default class MotorcyclessServise {
   private createMotorcycleDomain(motorcycle: IMotorcycle | null): Motorcycle | null {
@@ -16,11 +17,19 @@ export default class MotorcyclessServise {
     return this.createMotorcycleDomain(newMotorcycle);
   }
 
-  // public async getAllMotorcycle() {
+  public async getAllMotorcycles() {
+    const motorcyclesODM = new MotorcyclesODM();
+    const motorcycles = await motorcyclesODM.findAllMotorcycles();
+    const motorcyclesMaping = motorcycles.map((motorcycle) => this
+      .createMotorcycleDomain(motorcycle));
+    return motorcyclesMaping;
+  }
 
-  // }
-
-  // public async getMotorcycleById(id) {
-
-  // }
+  public async getMotorcycleById(id: string) {
+    const motorcyclesODM = new MotorcyclesODM();
+    const motorcycle = await motorcyclesODM.findMotorcycleById(id);
+ 
+    if (!Motorcycle) throw new ErrorMap(404, 'Motorcycle not found');
+    return this.createMotorcycleDomain(motorcycle);
+  }
 }

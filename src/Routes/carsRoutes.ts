@@ -9,4 +9,6 @@ carsRoutes.get('/cars/:id', (req, res, next) => new CarsController(req, res, nex
 
 carsRoutes.post('/cars', (req, res, next) => new CarsController(req, res, next).createCar());
 
+carsRoutes.put('/cars/:id', (req, res, next) => new CarsController(req, res, next).updateCar());
+
 export default carsRoutes;

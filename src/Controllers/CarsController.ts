@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import ICar from '../Interfaces/ICar';
-import { CarsService } from '../Services';
+import CarsService from '../Services/CarsService';
 
 export default class CarsController {
   private _service: CarsService;
@@ -44,4 +44,15 @@ export default class CarsController {
       this.next(error);
     }    
   }
-}
+
+  public async updateCar() {
+    const obj: ICar = { ...this.req.body };
+    const { id } = this.req.params;
+    try {
+      const car = await this._service.updateCar(id, obj);
+      return this.res.status(200).json(car);
+    } catch (error) {
+      this.next(error);
+    }    
+  }
+}  

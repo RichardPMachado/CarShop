@@ -29,7 +29,15 @@ export default class MotorcyclessServise {
     const motorcyclesODM = new MotorcyclesODM();
     const motorcycle = await motorcyclesODM.findVehicleById(id);
  
-    if (!Motorcycle) throw new ErrorMap(404, 'Motorcycle not found');
+    if (!motorcycle) throw new ErrorMap(404, 'Motorcycle not found');
     return this.createMotorcycleDomain(motorcycle);
+  }
+
+  public async updateMotorcycle(id: string, obj: IMotorcycle) {
+    const motorcyclesODM = new MotorcyclesODM();
+    const newMotorcycle = await motorcyclesODM.update(id, obj);
+    if (!newMotorcycle) throw new ErrorMap(404, 'Motorcycle not found');
+
+    return this.createMotorcycleDomain(newMotorcycle);
   }
 }

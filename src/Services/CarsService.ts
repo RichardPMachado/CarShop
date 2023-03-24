@@ -31,4 +31,11 @@ export default class CarsServise {
     if (!car) throw new ErrorMap(404, 'Car not found');
     return this.createCarDomain(car);
   }
+
+  public async updateCar(id: string, obj: ICar) {
+    const carsODM = new CarsODM();
+    const newCar = await carsODM.update(id, obj);
+    if (!newCar) throw new ErrorMap(404, 'Car not found');
+    return this.createCarDomain(newCar);
+  }
 }
